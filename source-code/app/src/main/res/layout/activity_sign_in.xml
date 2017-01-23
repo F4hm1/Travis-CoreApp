@@ -13,7 +13,7 @@
         android:src="@mipmap/ic_launcher"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true" />
-    <LinearLayout
+    <RelativeLayout
         android:layout_below="@+id/image"
         android:id="@+id/linear"
         android:layout_width="match_parent"
@@ -47,7 +47,8 @@
             android:layout_marginTop="5dp"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine = "true" />
+            android:singleLine = "true"
+            android:layout_below="@id/email"/>
         <Button
             android:id="@+id/signin1"
             android:layout_width="match_parent"
@@ -61,20 +62,32 @@
             android:layout_marginLeft="48dp"
             android:layout_marginRight="48dp"
             android:padding="9dp"
-            android:layout_marginTop="20dp" />
-    </LinearLayout>
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/password"
+            android:paddingRight="40dp"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/password"
+            android:layout_alignTop="@id/password"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_view_password"
+            android:background="@android:color/transparent"
+            android:layout_below="@id/email"
+            android:id="@+id/toggle_view_password"/>
+    </RelativeLayout>
     <TextView
         android:id="@+id/create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:textColor="#868584"
-        android:layout_toRightOf="@+id/acc"
         android:layout_below="@+id/linear"
         android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/signin"
-        android:paddingRight="46dp"
-        android:paddingTop="5dp" />
+        android:layout_marginRight="46dp"
+        android:paddingTop="5dp"
+        android:layout_marginTop="10dp"/>
     <TextView
         android:id="@+id/acc"
         android:layout_width="wrap_content"
@@ -85,5 +98,6 @@
         android:layout_below="@id/linear"
         android:textColor="#868584"
         android:paddingTop="5dp"
-        android:paddingLeft="55dp" />
+        android:paddingLeft="55dp"
+        android:layout_marginTop="10dp"/>
 </RelativeLayout>

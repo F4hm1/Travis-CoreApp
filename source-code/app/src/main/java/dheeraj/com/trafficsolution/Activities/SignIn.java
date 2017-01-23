@@ -9,14 +9,19 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.client.Firebase;
+import com.google.android.gms.ads.formats.NativeAd;
+import com.google.android.gms.location.internal.ParcelableGeofence;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +43,8 @@ public class SignIn extends AppCompatActivity {
 
     EditText email, password;
     Button bt_signIn;
+    ImageButton toggleViewPassword;
+    boolean passwordShown=false;
 
     FirebaseAuth firebaseAuth;
 
@@ -156,6 +163,8 @@ public class SignIn extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         bt_signIn = (Button) findViewById(R.id.signin1);
+        toggleViewPassword=(ImageButton)findViewById(R.id.toggle_view_password);
+
 
         Typeface MontReg = Typeface.createFromAsset(getApplication().getAssets(), "Montserrat-Regular.otf");
         Typeface MontBold = Typeface.createFromAsset(getApplication().getAssets(), "Montserrat-Bold.otf");
@@ -164,6 +173,25 @@ public class SignIn extends AppCompatActivity {
         email.setTypeface(MontReg);
         password.setTypeface(MontReg);
         bt_signIn.setTypeface(MontBold);
+
+        toggleViewPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(passwordShown){
+                    //DONT SHOW PASSWORD
+                    Glide.with(getApplicationContext()).load(R.drawable.ic_view_password).into(toggleViewPassword);
+                    passwordShown=false;
+                    password.setTransformationMethod(new PasswordTransformationMethod());
+                }
+                else{
+                    //SHOW PASSWORD
+                    Glide.with(getApplicationContext()).load(R.drawable.ic_unview_password).into(toggleViewPassword);
+                    passwordShown=true;
+                    password.setTransformationMethod(null);
+                }
+                password.setSelection(password.getText().length());
+            }
+        });
     }
 
     @Override

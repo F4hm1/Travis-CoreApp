@@ -63,6 +63,9 @@
                 android:paddingLeft="8dp"
                 android:layout_marginRight="46dp"
                 android:layout_marginTop="5dp" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/password"
                 android:textSize="16dp"
@@ -76,7 +79,19 @@
                 android:singleLine = "true"
                 android:paddingLeft="8dp"
                 android:inputType="textPassword"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:paddingRight="40dp"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/password"
+                android:layout_alignTop="@id/password"
+                android:layout_marginTop="13dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_view_password"
+                android:background="@android:color/transparent"
+                android:id="@+id/toggle_view_password"/>
+            </RelativeLayout>
             <EditText
                 android:id="@+id/village"
                 android:textSize="16dp"
