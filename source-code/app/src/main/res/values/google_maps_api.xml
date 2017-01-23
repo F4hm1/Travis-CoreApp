@@ -1,0 +1,32 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=25:9E:DE:C1:2A:E8:58:37:D2:32:88:11:BB:D5:69:53:40:E5:05:9F%3Bcom.iotaconcepts.distancecalc
+
+    You can also add your credentials to an existing key, using this line:
+    25:9E:DE:C1:2A:E8:58:37:D2:32:88:11:BB:D5:69:53:40:E5:05:9F;com.iotaconcepts.distancecalc
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+    AIzaSyAqRf36wKknGtlhXpEXs7Cht_aKYtS1y58
+    </string>
+
+    <!--
+
+    AIzaSyAqRf36wKknGtlhXpEXs7Cht_aKYtS1y58     // release on 12-4-16 14:42
+
+    AIzaSyCfQYLhpp3Di_vxP4LZutUCSdRZuSwdr6I     // release
+    AIzaSyAeOnJOL3q6_6RshxwBxgM_f1lQE9XQCn4     // debug
+     New API from google after generating SHA1 from release key: AIzaSyCm0dBgBk2r0oT-NA7te4ZApIvW-zyEgsM -->
+
+    <!--Old API from google before generating SHA1 from release key: AIzaSyAms2yG2J6ZwCkS4PBTo4clOo1KBMIfDO0 -->
+
+</resources>

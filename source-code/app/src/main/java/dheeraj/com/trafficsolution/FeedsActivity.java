@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dheeraj.com.trafficsolution.Activities.LoginRegisterChoose;
+import dheeraj.com.trafficsolution.Activities.TaxiMeter;
 import dheeraj.com.trafficsolution.Utils.SharedPreferenceMethods;
 
 public class FeedsActivity extends AppCompatActivity implements PostsFragment.OnPostSelectedListener {
@@ -66,6 +67,9 @@ public class FeedsActivity extends AppCompatActivity implements PostsFragment.On
     void init() {
         setContentView(R.layout.activity_feeds);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        Toast.makeText(FeedsActivity.this, "Please Wait. Loading Feed...", Toast.LENGTH_LONG).show();
+        Toast.makeText(FeedsActivity.this, "Please Wait. Loading Feed...", Toast.LENGTH_LONG).show();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.feeds_view_pager);
         FeedsPagerAdapter adapter = new FeedsPagerAdapter(getSupportFragmentManager());
@@ -134,6 +138,11 @@ public class FeedsActivity extends AppCompatActivity implements PostsFragment.On
         }
         else if (id == R.id.action_profile) {
             startActivity(new Intent(this, ProfileActivity.class));
+            finish();
+            return true;
+        }
+        else if (id == R.id.action_taxiMeter) {
+            startActivity(new Intent(this, TaxiMeter.class));
             finish();
             return true;
         }

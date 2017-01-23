@@ -3,7 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.google.firebase.samples.apps.friendlypix.FeedsActivity">
 
-
+    <item
+        android:id="@+id/action_taxiMeter"
+        android:title="Taxi Meter"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_taximeter"
+        >
+    </item>
     <item
         android:id="@+id/action_profile"
         android:title="Profile"
