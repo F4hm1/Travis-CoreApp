@@ -143,7 +143,6 @@ public class FeedsActivity extends AppCompatActivity implements PostsFragment.On
         }
         else if (id == R.id.action_taxiMeter) {
             startActivity(new Intent(this, TaxiMeter.class));
-            finish();
             return true;
         }
 

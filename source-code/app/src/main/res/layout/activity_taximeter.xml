@@ -32,7 +32,8 @@
             android:background="@drawable/tavi_icon_actionbar"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginTop="2dp"
+            android:visibility="invisible"/>
     </RelativeLayout>
 
     <Button
