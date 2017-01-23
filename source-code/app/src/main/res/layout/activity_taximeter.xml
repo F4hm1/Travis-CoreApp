@@ -4,37 +4,24 @@
     android:layout_height="fill_parent"
     android:background="#ffffff"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme"
+        android:titleTextColor="@color/colorWhite"
+        app:subtitleTextColor="@color/colorWhite"
+        style="@style/Widget.MyApp.Toolbar.Solid"/>
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:layout_marginTop="50dp" />
-    <SurfaceView
-        android:layout_width="match_parent"
-        android:layout_height="55dp" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Taxi Meter"
-            android:textColor="@color/colorAccent"
-            android:textSize="22dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:id="@+id/tv_maps_actionbar_title"/>
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="55dp"
-            android:background="@drawable/tavi_icon_actionbar"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="2dp"
-            android:visibility="invisible"/>
-    </RelativeLayout>
 
     <Button
         android:layout_width="fill_parent"

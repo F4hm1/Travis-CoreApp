@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -29,5 +29,15 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/primary_text_light</item>
         <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Widget.MyApp.Toolbar.Solid" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:elevation" tools:ignore="NewApi">4dp</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!-- Parent theme sets colorControlNormal to textColorPrimary. -->
+        <item name="android:textColorPrimary">@color/colorWhite</item>
     </style>
 </resources>

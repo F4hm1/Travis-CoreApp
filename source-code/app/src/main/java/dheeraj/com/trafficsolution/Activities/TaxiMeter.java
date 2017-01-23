@@ -1,5 +1,6 @@
 package dheeraj.com.trafficsolution.Activities;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +33,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -56,8 +58,7 @@ import java.lang.reflect.Method;
 import dheeraj.com.trafficsolution.GPSTracker;
 import dheeraj.com.trafficsolution.R;
 
-public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener
-{
+public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     private GoogleMap mMap;
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
@@ -91,20 +92,24 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     float distanceTravelled;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taximeter);
 
         init();
 
+        messagePopup("Geo - Taxi Meter",
+                "Geo Taxi Meter helps users to track their route on map in real time while they are travelling. This way they will not get fooled by the taxi drivers on taking wrong route. \n\nIt also has a fare calculator that calculates accurate fare in real time.\n\nPress on START JOURNEY to start tracking your ride.");
+
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.my_toolbar);
+        toolbar.setTitle("Geo - TaxiMeter");
+        toolbar.setTitleTextColor(Color.WHITE);
+
         if (!checkInternetConnection() && !checkLocationAccess()) {
             messagePopup("Required", "This application requires active INTERNET CONNECTION and GPS LOCATION enabled. Please turn them on.");
-        }
-        else if (!checkInternetConnection()) {
+        } else if (!checkInternetConnection()) {
             messagePopup("Required", "This application requires active INTERNET CONNECTION. Please turn on your data.");
-        }
-        else if (!checkLocationAccess()) {
+        } else if (!checkLocationAccess()) {
             messagePopup("Required", "Please turn on your LOCATION in order to use the app.");
         }
 
@@ -115,25 +120,21 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
 
         try {
             initilizeMap();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         fare_checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 et_fare_rate.setVisibility(View.VISIBLE);
                 save_fare.setVisibility(View.VISIBLE);
             }
         });
 
-        save_fare.setOnClickListener(new View.OnClickListener()
-        {
+        save_fare.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 save_fare.setVisibility(View.INVISIBLE);
                 et_fare_rate.setVisibility(View.INVISIBLE);
                 fare_display.setVisibility(View.VISIBLE);
@@ -141,17 +142,14 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
             }
         });
 
-        startWalking.setOnClickListener(new View.OnClickListener()
-        {
+        startWalking.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 gps = new GPSTracker(TaxiMeter.this);
-                if(gps.canGetLocation()) {
+                if (gps.canGetLocation()) {
                     lat_1 = gps.getLatitude();
                     lon_1 = gps.getLongitude();
-                }
-                else {
+                } else {
                     //       gps.showSettingsAlert();
                 }
 
@@ -164,8 +162,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
                     distanceDisplay.setVisibility(View.VISIBLE);
                     fare_checkbox.setVisibility(View.VISIBLE);
                     a = 1;
-                }
-                else if(a == 1) {
+                } else if (a == 1) {
                     // Snackbar
                     Snackbar snack = Snackbar.make(v, "Stoped measuring distance travelled.", Snackbar.LENGTH_LONG).setAction("Action", null);
                     ViewGroup group = (ViewGroup) snack.getView();
@@ -186,19 +183,19 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     } // On create
 
 
-    private void init(){
+    private void init() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        startWalking = (Button)findViewById(R.id.bt_startWalking);
-        distanceDisplay = (TextView)findViewById(R.id.tv_distance);
-        fare_checkbox = (CheckBox)findViewById(R.id.cb_fare_checkbox);
-        et_fare_rate = (EditText)findViewById(R.id.et_fare_rate);
-        save_fare = (Button)findViewById(R.id.bt_save_fare);
-        fare_display = (TextView)findViewById(R.id.tv_fare);
+        startWalking = (Button) findViewById(R.id.bt_startWalking);
+        distanceDisplay = (TextView) findViewById(R.id.tv_distance);
+        fare_checkbox = (CheckBox) findViewById(R.id.cb_fare_checkbox);
+        et_fare_rate = (EditText) findViewById(R.id.et_fare_rate);
+        save_fare = (Button) findViewById(R.id.bt_save_fare);
+        fare_display = (TextView) findViewById(R.id.tv_fare);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        ActionbarTitle = (TextView)findViewById(R.id.tv_maps_actionbar_title);
+        //ActionbarTitle = (TextView)findViewById(R.id.tv_maps_actionbar_title);
 
         Typeface Mont = Typeface.createFromAsset(getApplication().getAssets(), "Montserrat-Regular.otf");
-        ActionbarTitle.setTypeface(Mont);
+        //ActionbarTitle.setTypeface(Mont);
         startWalking.setTypeface(Mont);
         distanceDisplay.setTypeface(Mont);
         fare_checkbox.setTypeface(Mont);
@@ -214,8 +211,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     /**
      * function to load map. If map is not created it will create it for you
      * */
-    private void initilizeMap()
-    {
+    private void initilizeMap() {
         if (mMap == null) {
 
             MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -228,11 +224,20 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     }
 
 
-
     /**
      * Method to display the location on UI ************************************************************ F L A G ************
      * */
     private void displayLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (mLastLocation != null) {
@@ -247,8 +252,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
             fare_display.setText("Total fare: " + temp);
 
             count++;
-        }
-        else {
+        } else {
             //lat_lon_disp.setText("Couldn't get the location. Make sure location is enabled on the device");
         }
     }
@@ -257,10 +261,8 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     /**
      * Method to toggle periodic location updates
      * */
-    private void togglePeriodicLocationUpdates()
-    {
-        if (!mRequestingLocationUpdates)
-        {
+    private void togglePeriodicLocationUpdates() {
+        if (!mRequestingLocationUpdates) {
             // Changing the button text
             //startWalking.setText(getString(R.string.btn_stop_location_updates));
 
@@ -270,9 +272,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
 
             mRequestingLocationUpdates = true;
             startLocationUpdates();
-        }
-        else
-        {
+        } else {
             // Changing the button text
             //startWalking.setText(getString(R.string.btn_start_location_updates));
 
@@ -290,8 +290,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     /**
      * Creating google api client object
      * */
-    protected synchronized void buildGoogleApiClient()
-    {
+    protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -301,8 +300,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     /**
      * Creating location request object
      * */
-    protected void createLocationRequest()
-    {
+    protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         mLocationRequest.setFastestInterval(FATEST_INTERVAL);
@@ -313,8 +311,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     /**
      * Method to verify google play services on the device
      * */
-    private boolean checkPlayServices()
-    {
+    private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
@@ -334,8 +331,17 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     /**
      * Starting the location updates
      * */
-    protected void startLocationUpdates()
-    {
+    protected void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
@@ -356,8 +362,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
     }
 
     @Override
-    public void onConnected(Bundle arg0)
-    {
+    public void onConnected(Bundle arg0) {
         // Once connected with google api, get the location
         displayLocation();
 
@@ -375,8 +380,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
      * On Location Change ******************************************************************************* F L A G ************
      */
     @Override
-    public void onLocationChanged(Location location)
-    {
+    public void onLocationChanged(Location location) {
         // Assign the new location
         mLastLocation = location;
 
@@ -412,6 +416,16 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setRotateGesturesEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mMap.setMyLocationEnabled(true);
 
         gps = new GPSTracker(TaxiMeter.this);
@@ -432,8 +446,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
         Toast.makeText(TaxiMeter.this, L1 + "-" +  L2, Toast.LENGTH_SHORT).show();
 
         // check if map is created successfully or not
-        if (mMap == null)
-        {
+        if (mMap == null) {
             Toast.makeText(getApplicationContext(), "Sorry! unable to create maps", Toast.LENGTH_SHORT).show();
         }
     }
@@ -483,6 +496,7 @@ public class TaxiMeter extends FragmentActivity implements OnMapReadyCallback,Go
         });
         alertDialog.show();
     }
+
 
     boolean checkInternetConnection() {
         boolean mobileDataEnabled = false;

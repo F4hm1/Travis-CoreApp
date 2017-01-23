@@ -55,7 +55,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.TaxiMeter">
+        <activity android:name=".Activities.TaxiMeter"
+            android:label="Geo-TaxiMeter">
             <intent-filter>
                 <action android:name="android.intent.action.TAXIMETER" />
                 <category android:name="android.intent.category.DEFAULT" />

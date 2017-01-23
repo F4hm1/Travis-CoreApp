@@ -7,7 +7,7 @@
         android:id="@+id/action_taxiMeter"
         android:title="Taxi Meter"
         app:showAsAction="always"
-        android:icon="@drawable/icon_taximeter"
+        android:icon="@drawable/image_taximeter"
         >
     </item>
     <item
@@ -20,10 +20,5 @@
         android:id="@+id/action_logout"
         android:orderInCategory="100"
         android:title="Logout"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="Settings"
         app:showAsAction="never" />
 </menu>
